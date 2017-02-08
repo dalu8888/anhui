@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>法律诉讼</title>
+    <link th:href="@{bootstrap/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="w100">
+    <div class="container bg-gray">
+        <!--头部-->
+        <div class="header">
+            <form class="form-inline definewidth m20" th:action="@{/companys}" method="get">
+                <div class="top-search t-center bg-yellow">
+                    <div class="fl shw-name c-fff">
+                        安徽商务诚信服务平台
+                    </div>
+                    <div class="fl search">
+                        <input type="text" name="keyword" class="" placeholder="请输入企业名称、人名、产品名等"/>
+                        <button class="search-btn" ></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--内容部分-->
+        <div class="content w90">
+            <!--公司信息-->
+            <div class="content-info mt15 bg-fff">
+                <div class="enter-info clearFix">
+                    <div class="enter-img fl">
+                        <img th:src="@{bootstrap/images/enter-logo_03.png}"  alt=""/>
+                    </div>
+                    <div class="enter-right fl">
+                        <div  th:each="listcomapny:${listcomapny}" class="clearFix">
+                            <div th:if="${not #lists.isEmpty(listpunish)}">
+                                <span th:text="${listcomapny.mc}" class="enter-name fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div >
+                                <span th:text="${listcomapny.mc}" class="enter-names fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div class="fr">
+                                <span class="gz-btn mt15 point"></span>
+                                <span class="export point">导出报告</span>
+                            </div>
+                        </div>
+                        <p th:each="listyearReport:${listyearReport}" class="fz14 mt5">
+                            <span>电话：<i th:text="${listyearReport.jbxx.lxdh}">暂无</i></span>
+                            <span>邮箱：<i th:text="${listyearReport.jbxx.dzyx}">暂无</i></span>
+                        </p>
+                        <p  class="fz14 mt5">
+                            <span th:each="listcomapny:${listcomapny}">地址：<i th:text="${listcomapny.zs}" >安徽省合肥市包河区延安路11号</i></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--tab区域-->
+            <div class="bg-fff mt15 border-b">
+                <div class="enter-info">
+                    <div th:each="listcomapny:${listcomapny}" class="common-list common-list2 c-gray">
+                        <span id="jiben">基本信息</span>
+                        <span id="jingying">经营状况</span>
+                        <span id="qiye">企业年报</span>
+                        <span class="active">法律诉讼</span>
+                        <span id="zhishi">知识产权</span>
+                        <span id="guanlian">关联</span>
+                        <span id="xinwen">新闻事件</span>
+                        <input th:type="hidden" th:value="${listcomapny.tishxxdm}" id="com"/>
+                        <input th:type="hidden" th:value="${listcomapny.zch}" id="coms"/>
+                        <input th:type="hidden" th:value="${listcomapny.mc}" id="mc"/>
+                    </div>
+                    <div class="common-list3 c-gray common-list">
+                        <span class="active" about="ktgg">开庭公告</span>
+                        <span about="cpws">裁判文书</span>
+                        <span about="zxjl">执行记录</span>
+                        <span about="sxbzxr">失信被执行人</span>
+                        <span about="ssgg">涉诉公告</span>
+                        <span about="sfxz">司法协助</span>
+                    </div>
+                </div>
+            </div>
+            <!--内容-->
+            <div class="content-info bg-fff">
+                <!--开庭公告-->
+                <div id="ktgg" class="enter-info border-b">
+                    <div class="partner">
+                        <p>开庭公告</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>开庭时间</th>
+                                <th>法院</th>
+                                <th>案由</th>
+                                <th>当事人</th>
+                            </tr>
+                            <tr  th:each="listcourt:${listcourt}">
+                                <td th:text="${listcourt.ktsj}">2016-02-22</td>
+                                <td th:text="${listcourt.fy}" class="c-blue">安徽省合肥市蜀山人民法院</td>
+                                <td th:text="${listcourt.ay}">民间借贷纠纷</td>
+                                <td th:text="${listcourt.dsr}">原告: <span class="c-blue">合肥市九万里医药有限公司</span>，被告: <span class="c-blue">叶建林</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listcourt)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--裁判文书-->
+                <div  id="cpws" class="enter-info">
+                    <div class="partner">
+                        <p>裁判文书</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>裁判时间</th>
+                                <th>标题</th>
+                                <th>案由</th>
+                                <th>法院</th>
+                            </tr>
+                            <tr th:each="listwrit:${listwrit}">
+                                <td th:text="${listwrit.pjsj}" >2016-02-26</td>
+                                <td th:text="${listwrit.bt}" class="c-blue">注册资本</td>
+                                <td th:text="${listwrit.ay}" >100829.00000</td>
+                                <td th:text="${listwrit.fy}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listcourt)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--执行记录-->
+                <div id="zxjl" class="enter-info border-b">
+                    <div class="member">
+                        <p>执行记录</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>被执行人姓名/名称</th>
+                                <th>案号</th>
+                                <th>案件状态</th>
+                                <th>立案时间</th>
+                            </tr>
+                            <tr th:each="listexecute:${listexecute}">
+                                <td th:text="${listexecute.bzxr}" >2016-02-26</td>
+                                <td th:text="${listexecute.ah}" class="c-blue">注册资本</td>
+                                <td th:text="${listexecute.ajzt}" >100829.00000</td>
+                                <td th:text="${listexecute.lasj}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listexecute)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--失信被执行人-->
+                <div id="sxbzxr" class="enter-info border-b">
+                    <div class="member">
+                        <p>失信被执行人</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>被执行人姓名/名称</th>
+                                <th>执行法院</th>
+                                <th>做出执行依据单位</th>
+                                <th>立案时间</th>
+                            </tr>
+                            <tr th:each="listbadfaith:${listbadfaith}">
+                                <td th:text="${listbadfaith.bzxrxm}" >2016-02-26</td>
+                                <td th:text="${listbadfaith.zxfy}" class="c-blue">注册资本</td>
+                                <td th:text="${listbadfaith.zczxyjdw}" >100829.00000</td>
+                                <td th:text="${listbadfaith.lasj}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listbadfaith)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--涉诉公告-->
+                <div id="ssgg" class="enter-info border-b">
+                    <div class="partner">
+                        <p>涉诉公告</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>公告时间</th>
+                                <th>当事人</th>
+                                <th>公告类型</th>
+                                <th>公告人</th>
+                            </tr>
+                            <tr th:each="listadvice:${listadvice}">
+                                <td th:text="${listadvice.ggsj}" >2016-02-26</td>
+                                <td th:text="${listadvice.dsr}" class="c-blue">注册资本</td>
+                                <td th:text="${listadvice.gglx}" >100829.00000</td>
+                                <td th:text="${listadvice.ggr}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listadvice)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--司法协助-->
+                <div  id="sfxz" class="enter-info">
+                    <div class="member">
+                        <p>司法协助</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>股权所在企业名称</th>
+                                <th>公示日期</th>
+                                <th>执行事项</th>
+                                <th>被执行人持有股权</th>
+                            </tr>
+                            <tr th:each="listjudicial:${listjudicial}">
+                                <td th:text="${listjudicial.gqszqymc}" >2016-02-26</td>
+                                <td th:text="${listjudicial.zxfy}" class="c-blue">注册资本</td>
+                                <td th:text="${listjudicial.zxsx}" >100829.00000</td>
+                                <td th:text="${listjudicial.zxtzswh}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listjudicial)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script  th:src="@{bootstrap/js/jquery-2.1.3.min.js}"></script>
+<script  th:src="@{bootstrap/js/layer/layer.js}"></script>
+<script  th:src="@{bootstrap/js/laypage.js}"></script>
+<script>
+    $('.common-list3 span').on('click',function () {
+        window.location.hash = '#'+$(this).attr('about'); });
+
+    $('.common-list span').on('click',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.sheet-list .sheet').on('click',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+</script>
+<script th:inline="javascript">
+
+    //基本信息
+    $("#jiben").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "base?id="+id+'?'+caseName;
+
+    });
+    //经营状况
+    $("#jingying").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "jingyin?id="+id+'?'+caseName;
+
+    });
+    //企业年报
+    $("#qiye").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "qiyenb?id="+id+'?'+caseName;
+
+    });
+    //法律诉讼
+    $("#falv").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "law?id="+id+'?'+caseName;
+
+    });
+    //知识产权
+    $("#zhishi").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "knowledge?id="+id+'?'+caseName;
+
+    });
+    //新闻事件
+    $("#xinwen").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "news?id="+id+'?'+caseName;
+
+    });
+    //关联
+    $("#guanlian").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "releave?id="+id+'?'+caseName;
+
+    });
+</script>
+</html>

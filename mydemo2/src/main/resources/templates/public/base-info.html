@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>基本信息</title>
+    <link th:href="@{bootstrap/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="w100">
+    <div class="container bg-gray">
+        <!--头部-->
+        <div class="header">
+            <form class="form-inline definewidth m20" th:action="@{/companys}" method="get">
+                <div class="top-search t-center bg-yellow">
+                    <div class="fl shw-name c-fff">
+                        安徽商务诚信服务平台
+                    </div>
+                    <div class="fl search">
+                        <input type="text" name="keyword" class="" placeholder="请输入企业名称、人名、产品名等"/>
+                        <button class="search-btn" ></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--内容部分-->
+        <div class="content w90">
+            <!--公司信息-->
+            <div  class="content-info mt15 bg-fff" >
+                <div class="enter-info clearFix">
+                   <div class="enter-img fl">
+                       <img th:src="@{bootstrap/images/enter-logo_03.png}" alt=""/>
+                   </div>
+                    <div  class="enter-right fl">
+                        <div  th:each="listcomapny:${listcomapny}" class="clearFix">
+                            <div th:if="${not #lists.isEmpty(listpunish)}">
+                                <span th:text="${listcomapny.mc}" class="enter-name fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div >
+                                <span th:text="${listcomapny.mc}" class="enter-names fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div class="fr">
+                                <span class="gz-btn mt15 point"></span>
+                                <span class="export point">导出报告</span>
+                            </div>
+                        </div>
+                        <p th:each="listyearReport:${listyearReport}" class="fz14 mt5">
+                            <span>电话：<i th:text="${listyearReport.jbxx.lxdh}">暂无</i></span>
+                            <span>邮箱：<i th:text="${listyearReport.jbxx.dzyx}">暂无</i></span>
+                        </p>
+                        <p  th:each="listcomapny:${listcomapny}" class="fz14 mt5">
+                            <span th:text="${listcomapny.zs}">地址：<i>安徽省合肥市包河区延安路11号</i></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--tab区域-->
+            <div class="content-info bg-fff mt15 border-b">
+                <div class="enter-info">
+                    <div   th:each="listcomapny:${listcomapny}" class="common-list common-list2 c-gray">
+                        <span class="active">基本信息</span>
+                        <span id="jingying">经营状况</span>
+                        <span id="qiye">企业年报</span>
+                        <span id="falv">法律诉讼</span>
+                        <span id="zhishi">知识产权</span>
+                        <span id="guanlian">关联</span>
+                        <span id="xinwen">新闻事件</span>
+                        <input th:type="hidden" th:value="${listcomapny.tishxxdm}" id="com"/>
+                        <input th:type="hidden" th:value="${listcomapny.zch}" id="coms"/>
+                        <input th:type="hidden" th:value="${listcomapny.mc}" id="mc"/>
+                    </div>
+                    <div class="common-list3 c-gray common-list">
+                        <span about="ktgg"  class="active">工商信息</span>
+                        <span about="cpws">股东信息</span>
+                        <span about="zxjl">主要成员</span>
+                    </div>
+                </div>
+            </div>
+            <!--内容-->
+            <div class="content-info bg-fff">
+                <!--工商信息-->
+                <div id="ktgg" class="enter-info border-b">
+                    <div class="business">
+                        <p>工商信息</p>
+                        <table class="common-table w100">
+                            <tr  th:each="listcomapny:${listcomapny}">
+                                <th>统一社会信用代码</th>
+                                <td th:text="${listcomapny.tishxxdm}">91341007373256823</td>
+                                <th>注册号</th>
+                                <td th:text="${listcomapny.zch}">340200022</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th >名称</th>
+                                <td th:text="${listcomapny.mc}">合肥市九万里有限公司</td>
+                                <th >类型</th>
+                                <td th:text="${listcomapny.lx}">有限责任公司</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>法定代表人</th>
+                                <td th:text="${listcomapny.fddbr}">桑朝阳</td>
+                                <th>注册资本</th>
+                                <td th:text="${listcomapny.zczb}">10098.0万人民币</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>成立日期</th>
+                                <td th:text="${listcomapny.clrq}" colspan="3">2002-03-11</td>
+
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>住所</th>
+                                <td th:text="${listcomapny.zs}" colspan="3">安徽省合肥市</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>营业期限自</th>
+                                <td th:text="${listcomapny.yyqxz}">2002-03-11</td>
+                                <th>营业期限至</th>
+                                <td th:text="${listcomapny.yyqxzs}">2002-03-11</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>经营范围</th>
+                                <td th:text="${listcomapny.jyfw}" colspan="3">合肥市九万里有限合肥市九万里有限公司合肥市九万里有限公司公司</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>登记机关</th>
+                                <td th:text="${listcomapny.djjg}">合肥市工商行政管理局</td>
+                                <th>核准日期</th>
+                                <td th:text="${listcomapny.hzrq}">2016-02-26</td>
+                            </tr>
+                            <tr th:each="listcomapny:${listcomapny}">
+                                <th>登记状态</th>
+                                <td th:text="${listcomapny.djzt}">在营（开业）企业</td>
+                                <th>吊销日期</th>
+                                <td th:text="${listcomapny.dxrq}">2016-02-26</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listcomapny)}">
+                    <p>暂无记录！</p>
+                </div>
+                <!--股东信息-->
+                <div id="cpws" class="enter-info border-b">
+                    <div class="partner">
+                        <p>股东信息</p>
+                        <table class="common-table w100">
+                            <tr>
+                                <th>股东名称</th>
+                                <th>股东类型</th>
+                                <th>认缴出资币种</th>
+                            </tr>
+                            <tr th:each="listinvestorInfo:${listinvestorInfo}">
+                                <td  th:text="${listinvestorInfo.gdmc}" class="c-blue">宋波</td>
+                                <td th:text="${listinvestorInfo.gdlx}">自然人股东</td>
+                                <td th:text="${listinvestorInfo.rjczbz}"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"   th:if="${#lists.isEmpty(listinvestorInfo)}">
+                    <p>暂无记录！</p>
+                </div>
+                <!--主要成员-->
+                <div id="zxjl" class="enter-info">
+                    <div class="member">
+                        <p>主要成员</p>
+                        <table class="common-table w100">
+                            <tr th:each="listmember:${listmember}">
+                                <th>姓名</th>
+                                <td th:text="${listmember.xm}">钱敏</td>
+                                <th>职务</th>
+                                <td th:text="${listmember.zw}">钱敏</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listmember)}">
+                    <p>暂无记录！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script  th:src="@{bootstrap/js/laypage.js}"></script>
+<script  th:src="@{bootstrap/js/jquery-2.1.3.min.js}"></script>
+<script  th:src="@{bootstrap/js/anhui.js}"></script>
+<script>
+    $('.common-list span').on('click',function () {
+       $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.common-list3 span').on('click',function () {
+        window.location.hash = '#'+$(this).attr('about'); });
+</script>
+<script th:inline="javascript">
+
+    //基本信息
+    $("#jiben").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "base?id="+id+'?'+caseName;
+
+    });
+    //经营状况
+    $("#jingying").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "jingyin?id="+id+'?'+caseName;
+
+    });
+    //企业年报
+    $("#qiye").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "qiyenb?id="+id+'?'+caseName;
+
+    });
+    //法律诉讼
+    $("#falv").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "law?id="+id+'?'+caseName;
+
+    });
+    //知识产权
+    $("#zhishi").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "knowledge?id="+id+'?'+caseName;
+
+    });
+    //新闻事件
+    $("#xinwen").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "news?id="+id+'?'+caseName;
+
+    });
+    //关联
+    $("#guanlian").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "releave?id="+id+'?'+caseName;
+
+    });
+</script>
+</html>

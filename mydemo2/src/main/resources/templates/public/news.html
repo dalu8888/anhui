@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>新闻事件</title>
+    <link th:href="@{bootstrap/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="w100">
+    <div class="container bg-gray">
+        <!--头部-->
+        <div class="header">
+            <form class="form-inline definewidth m20" th:action="@{/companys}" method="get">
+                <div class="top-search t-center bg-yellow">
+                    <div class="fl shw-name c-fff">
+                        安徽商务诚信服务平台
+                    </div>
+                    <div class="fl search">
+                        <input type="text" name="keyword" class="" placeholder="请输入企业名称、人名、产品名等"/>
+                        <button class="search-btn" ></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--内容部分-->
+        <div class="content w90">
+            <!--公司信息-->
+            <div class="content-info mt15 bg-fff">
+                <div class="enter-info clearFix">
+                    <div class="enter-img fl">
+                        <img th:src="@{bootstrap/images/enter-logo_03.png}"  alt=""/>
+                    </div>
+                    <div class="enter-right fl">
+                        <div  th:each="listcomapny:${listcomapny}" class="clearFix">
+                            <div th:if="${not #lists.isEmpty(listpunish)}">
+                                <span th:text="${listcomapny.mc}" class="enter-name fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div >
+                                <span th:text="${listcomapny.mc}" class="enter-names fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div class="fr">
+                                <span class="gz-btn mt15 point"></span>
+                                <span class="export point">导出报告</span>
+                            </div>
+                        </div>
+                        <p th:each="listyearReport:${listyearReport}" class="fz14 mt5">
+                            <span>电话：<i th:text="${listyearReport.jbxx.lxdh}">暂无</i></span>
+                            <span>邮箱：<i th:text="${listyearReport.jbxx.dzyx}">暂无</i></span>
+                        </p>
+                        <p  class="fz14 mt5">
+                            <span th:each="listcomapny:${listcomapny}">地址：<i th:text="${listcomapny.zs}" >安徽省合肥市包河区延安路11号</i></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--tab区域-->
+            <div class="bg-fff mt15 border-b">
+                <div class="enter-info">
+                    <div th:each="listcomapny:${listcomapny}" class="common-list common-list2 c-gray">
+                        <span id="jiben" >基本信息</span>
+                        <span id="jingying">经营状况</span>
+                        <span  id="qiye">企业年报</span>
+                        <span id="falv">法律诉讼</span>
+                        <span id="zhishi">知识产权</span>
+                        <span id="guanlian">关联</span>
+                        <span class="active">新闻事件</span>
+                        <input th:type="hidden" th:value="${listcomapny.tishxxdm}" id="com"/>
+                        <input th:type="hidden" th:value="${listcomapny.zch}" id="coms"/>
+                        <input th:type="hidden" th:value="${listcomapny.mc}" id="mc"/>
+                    </div>
+                    <div class="common-list3 c-gray common-list">
+                    </div>
+                </div>
+            </div>
+            <!--内容-->
+            <div class="content-info bg-fff">
+                <div th:each="listnews:${listnews}" class="enter-info border-b fz14 news">
+                    <p th:text="${listnews.title}" class="c-yellow title">包河区工商联组织慰问抗洪一线官兵</p>
+                    <p th:text="${listnews.url}" class="c-999">2016-07-15</p>
+                    <p th:text="${listnews.content}" class="c-gray">合肥清清水处理有限公司和Miss精品酒店购买了4片正片猪肉，合肥 <span class="c-red">合肥九万里</span>清清水处理有限公司和Miss精品酒店购买了4片正片猪肉，合肥清清水处理有限公司和Miss精品酒店购买了4片正片猪肉，合肥清清水处理有限公司和Miss精品酒店购买了4片正片猪肉，</p>
+                </div>
+            </div>
+            <div class="enter-info border-b"  th:if="${#lists.isEmpty(listnews)}">
+                <p class="c-blue">暂无记录！</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script  th:src="@{bootstrap/js/laypage.js}"></script>
+<script  th:src="@{bootstrap/js/jquery-2.1.3.min.js}"></script>
+<script  th:src="@{bootstrap/js/anhui.js}"></script>
+<script>
+    $('.common-list span').on('click',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+    $('.sheet-list .sheet').on('click',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+</script>
+<script th:inline="javascript">
+
+    //基本信息
+    $("#jiben").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "base?id="+id+'?'+caseName;
+
+    });
+    //经营状况
+    $("#jingying").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "jingyin?id="+id+'?'+caseName;
+
+    });
+    //企业年报
+    $("#qiye").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "qiyenb?id="+id+'?'+caseName;
+
+    });
+    //法律诉讼
+    $("#falv").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "law?id="+id+'?'+caseName;
+
+    });
+    //知识产权
+    $("#zhishi").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "knowledge?id="+id+'?'+caseName;
+
+    });
+    //新闻事件
+    $("#xinwen").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "news?id="+id+'?'+caseName;
+
+    });
+    //关联
+    $("#guanlian").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "releave?id="+id+'?'+caseName;
+
+    });
+</script>
+</html>

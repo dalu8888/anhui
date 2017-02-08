@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>经营状况</title>
+    <link th:href="@{bootstrap/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="w100">
+    <div class="container bg-gray">
+        <!--头部-->
+        <div class="header">
+            <form class="form-inline definewidth m20" th:action="@{/companys}" method="get">
+                <div class="top-search t-center bg-yellow">
+                    <div class="fl shw-name c-fff">
+                        安徽商务诚信服务平台
+                    </div>
+                    <div class="fl search">
+                        <input type="text" name="keyword" class="" placeholder="请输入企业名称、人名、产品名等"/>
+                        <button class="search-btn" ></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--内容部分-->
+        <div class="content w90">
+            <!--公司信息-->
+            <div class="content-info mt15 bg-fff">
+                <div class="enter-info clearFix">
+                    <div class="enter-img fl">
+                        <img th:src="@{bootstrap/images/enter-logo_03.png}"  alt=""/>
+                    </div>
+                    <div class="enter-right fl">
+                        <div  th:each="listcomapny:${listcomapny}" class="clearFix">
+                            <div th:if="${not #lists.isEmpty(listpunish)}">
+                                <span th:text="${listcomapny.mc}" class="enter-name fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div >
+                                <span th:text="${listcomapny.mc}" class="enter-names fl">合肥市九万里有限公司</span>
+                            </div>
+                            <div class="fr">
+                                <span class="gz-btn mt15 point"></span>
+                                <span class="export point">导出报告</span>
+                            </div>
+                        </div>
+                        <p th:each="listyearReport:${listyearReport}" class="fz14 mt5">
+                            <span>电话：<i th:text="${listyearReport.jbxx.lxdh}">暂无</i></span>
+                            <span>邮箱：<i th:text="${listyearReport.jbxx.dzyx}">暂无</i></span>
+                        </p>
+                        <p  class="fz14 mt5">
+                            <span th:each="listcomapny:${listcomapny}">地址：<i th:text="${listcomapny.zs}" >安徽省合肥市包河区延安路11号</i></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--tab区域-->
+            <div class="content-info bg-fff mt15 border-b">
+                <div class="enter-info">
+                    <div th:each="listcomapny:${listcomapny}" class="common-list common-list2 c-gray">
+                        <span id="jiben">基本信息</span>
+                        <span class="active">经营状况</span>
+                        <span id="qiye">企业年报</span>
+                        <span id="falv">法律诉讼</span>
+                        <span id="zhishi">知识产权</span>
+                        <span id="guanlian">关联</span>
+                        <span id="xinwen">新闻事件</span>
+                        <input th:type="hidden" th:value="${listcomapny.tishxxdm}" id="com"/>
+                        <input th:type="hidden" th:value="${listcomapny.zch}" id="coms"/>
+                        <input th:type="hidden" th:value="${listcomapny.mc}" id="mc"/>
+                    </div>
+                    <div class="common-list3 c-gray common-list">
+                        <span about="gsbg" class="active">工商变更</span>
+                        <span about="dcrz">动产融资</span>
+                        <span about="gqcz">股权出质</span>
+                        <span about="qyjyzk">企业经营状况</span>
+                        <span about="dzswjbqk">电子商务基本情况</span>
+                        <span about="xzcf">行政处罚</span>
+                        <span about="xxpl">信息披露</span>
+                        <span about="qsxx">欠税信息</span>
+                        <span about="jyyc">经营异常</span>
+                    </div>
+                </div>
+            </div>
+            <!--内容-->
+            <div class="content-info bg-fff">
+                <!--工商变更-->
+                <div id="gsbg" class="enter-info border-b">
+                    <div class="partner">
+                        <p>工商变更</p>
+                        <table class="common-table w100">
+                            <tr >
+                                <th width="20%">变更日期</th>
+                                <th width="20%">变更事项</th>
+                                <th>变更后内容</th>
+                            </tr>
+                            <tr th:each="listbusines:${listbusines}">
+                                <td th:text="${listbusines.bgrq}" class="c-blue">2016-02-26</td>
+                                <td th:text="${listbusines.bgsx}" >注册资本</td>
+                                <td th:text="${listbusines.bgh}" >100829.00000</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listbusines)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--动产融资-->
+                <div id="dcrz" class="enter-info border-b">
+                    <div class="partner">
+                        <p>动产融资</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>登记时间</th>
+                                <th>交易业务类型</th>
+                                <th>履行期限</th>
+                                <th>登记编号</th>
+                                <th>登记种类</th>
+                                <th>当事人</th>
+                            </tr>
+                            <tr th:each="listchatte:${listchatte}">
+                                <td  th:text="${listchatte.djrq}" class="c-blue">2016-06-07</td>
+                                <td th:text="${listchatte.jyywlx}">应收账款质押和转让</td>
+                                <td th:text="${listchatte.lxqx}">自2016年06月07日至2017年08月30日</td>
+                                <td th:text="${listchatte.djbh}">00583190000333350000</td>
+                                <td th:text="${listchatte.djzl}">展期登记</td>
+                                <td th:text="${listchatte.dsr}">
+                                    <p>质权人：<span class="c-blue">恒生银行（中国）有限公司</span></p>
+                                    <p>质权人：<span class="c-blue">恒生银行（中国）有限公司</span></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listchatte)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--股权出质-->
+                <div id="gqcz" class="enter-info border-b">
+                    <div class="partner">
+                        <p>股权出质</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>发布时间</th>
+                                <th>出质股权数额</th>
+                                <th>质权人</th>
+                                <th>状态</th>
+                            </tr>
+                            <tr th:each="liststockvend:${liststockvend}">
+                                <td th:text="${liststockvend.djrq}">1</td>
+                                <td th:text="${liststockvend.czgqse}" class="c-blue">2016-06-07</td>
+                                <td th:text="${liststockvend.czr}">应收账款质押和转让</td>
+                                <td th:text="${liststockvend.zt}">自2016年06月07日至2017年08月30日</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(liststockvend)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--企业经营状况-->
+                <div id="qyjyzk" class="enter-info border-b">
+                    <div class="partner">
+                        <p>企业经营状况</p>
+                        <table class="common-table w100 gudong">
+                            <tr >
+                                <th>序号</th>
+                                <th>发布时间</th>
+                                <th>报表名称</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr th:each="list,iterstat:${binfo}">
+                                <td th:text="${iterstat.count}">1</td>
+                                <td th:text="${list.date}">2016-06-07</td>
+                                <td th:text="${list.reportName}">应收账款质押和转让应收账款质押和转让</td>
+                                <td class="c-blue point jy-table">查看</td>
+                            </tr>
+                            <!--<tr >-->
+                                <!--<td >1</td>-->
+                                <!--<td >2016-06-07</td>-->
+                                <!--<td >应收账款质押和转让应收账款质押和转让</td>-->
+                                <!--<td class="c-blue point jy-table">查看</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(binfo)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--电子商务基本情况-->
+                <div id="dzswjbqk" class="enter-info border-b">
+                    <div class="partner">
+                        <p>电子商务基本情况</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>序号</th>
+                                <th>发布时间</th>
+                                <th>报表名称</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr  th:each="binfo5,iterstat:${binfo5}">
+                                <td th:text="${iterstat.count}">1</td>
+                                <td th:text="${binfo5.date}">2016-06-07</td>
+                                <td th:text="${binfo5.reportName}">应收账款质押和转让应收账款质押和转让</td>
+                                <td class="c-blue point dz-table">查看</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(binfo5)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--<div class="enter-info border-b"  th:if="${#lists.isEmpty(listpunish)}">-->
+                    <!--<p class="c-blue">暂无记录！</p>-->
+                <!--</div>-->
+                <!--行政处罚-->
+                <div id="xzcf" class="enter-info border-b">
+                    <div class="partner">
+                        <p>行政处罚</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>文案号</th>
+                                <th>立案时间</th>
+                                <th>案名</th>
+                                <th>行政处罚种类</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr th:each="listpunish:${listpunish}">
+                                <td th:text="${listpunish.xzcfjdwsh}">1</td>
+                                <td th:text="${listpunish.zccfjddrq}">2015-02-03</td>
+                                <td th:text="${listpunish.zywfwgss}">以非药品冒充药品</td>
+                                <td th:text="${listpunish.xzcfjd}">60.00</td>
+                                <td  class="c-blue point show-Table" >
+                                    查看
+                                    <!--<a th:href="@{/anjian(caseName=${listpunish.mc},id=${listpunish.id})}">查看</a>-->
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listpunish)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--信息披露-->
+                <div id="xxpl" class="enter-info border-b">
+                    <div class="partner">
+                        <p>信息披露</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>公告时间</th>
+                                <th>标题</th>
+                                <th>摘要</th>
+                                <th>证券简称</th>
+                                <th>公告来源</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listpunish)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--欠税记录-->
+                <div id="qsxx" class="enter-info border-b">
+                    <div class="member">
+                        <p>欠税记录</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>名称</th>
+                                <th>法定代表人姓名</th>
+                                <th>金额</th>
+                                <th>税务机关</th>
+                            </tr>
+                            <tr th:each="listtaxarrears:${listtaxarrears}">
+                                <td th:text="${listtaxarrears.mc}">1</td>
+                                <td th:text="${listtaxarrears.fddbrxm}" class="c-blue">2016-06-07</td>
+                                <td th:text="${listtaxarrears.je}">应收账款质押和转让</td>
+                                <td th:text="${listtaxarrears.swjg}">自2016年06月07日至2017年08月30日</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listtaxarrears)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+                <!--经营异常-->
+                <div id="jyyc" class="enter-info border-b">
+                    <div class="member">
+                        <p>经营异常</p>
+                        <table class="common-table w100 gudong">
+                            <tr>
+                                <th>异常原因</th>
+                                <th>移出原因</th>
+                                <th>列入日期</th>
+                            </tr>
+                            <tr th:each="listabnormal:${listabnormal}">
+                                <td th:text="${listabnormal.ycyy}">1</td>
+                                <td th:text="${listabnormal.ycrq}" class="c-blue">2016-06-07</td>
+                                <td th:text="${listabnormal.lrrq}">应收账款质押和转让</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listabnormal)}">
+                    <p class="c-blue">暂无记录！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+企业经营状况 弹出
+<div th:if="${not #lists.isEmpty(binfo)}">
+<div id="jyLayer" class="layer-table " style="display: none">
+    <table class="common-table w100">
+
+
+        <tr>
+            <th rowspan="2">指标名称</th>
+            <th rowspan="2">计量单位</th>
+            <th rowspan="2">代码</th>
+            <th colspan="2">合计</th>
+            <th colspan="2">直营店</th>
+        </tr>
+
+
+        <tr>
+            <th>本期</th>
+            <th>上年同期</th>
+            <th>本期</th>
+            <th>上年同期</th>
+        </tr>
+        <tr>
+            <th>甲</th>
+            <td>乙</td>
+            <td>丙</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+
+        <!--<tr th:if="${#lists.isEmpty(storesTotal)}">&lt;!&ndash; listanjian&ndash;&gt;-->
+            <!--<th>暂无记录！</th>-->
+        <!--</tr>-->
+        <tr ><!--th:each="st:${storesTotal}"-->
+            <th>门店总数</th>
+            <td th:text="${storesTotal.measurement}">乙</td>
+            <td th:text="${storesTotal.code}">丙</td>
+            <td th:text="${storesTotal.currentTotal}">1</td>
+            <td th:text="${storesTotal.lastYearTotal}">2</td>
+            <td th:text="${storesTotal.currentTotal}">3</td>
+            <td th:text="${storesTotal.currentStore}">4</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(storesTotal)}"><!-- listanjian-->
+            <th>暂无记录！</th>
+        </tr>
+        <tr>
+            <th>其中：医保定点药房门店数</th>
+            <td th:text="${medicalInsTotal.measurement}">乙</td>
+            <td th:text="${medicalInsTotal.code}">丙</td>
+            <td th:text="${medicalInsTotal.currentTotal}">1</td>
+            <td th:text="${medicalInsTotal.lastYearTotal}">2</td>
+            <td th:text="${medicalInsTotal.currentTotal}">3</td>
+            <td th:text="${medicalInsTotal.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>营业面积</th>
+            <td th:text="${operatingArea.measurement}">乙</td>
+            <td th:text="${operatingArea.code}">丙</td>
+            <td th:text="${operatingArea.currentTotal}">1</td>
+            <td th:text="${operatingArea.lastYearTotal}">2</td>
+            <td th:text="${operatingArea.currentTotal}">3</td>
+            <td th:text="${operatingArea.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>销售总额（含增值税）</th>
+            <td th:text="${salesTotal.measurement}">乙</td>
+            <td th:text="${salesTotal.code}">丙</td>
+            <td th:text="${salesTotal.currentTotal}">1</td>
+            <td th:text="${salesTotal.lastYearTotal}">2</td>
+            <td th:text="${salesTotal.currentTotal}">3</td>
+            <td th:text="${salesTotal.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>其中：凭医院处方的销售额</th>
+            <td th:text="${hospitalPre.measurement}">乙</td>
+            <td th:text="${hospitalPre.code}">丙</td>
+            <td th:text="${hospitalPre.currentTotal}">1</td>
+            <td th:text="${hospitalPre.lastYearTotal}">2</td>
+            <td th:text="${hospitalPre.currentTotal}">3</td>
+            <td th:text="${hospitalPre.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>处方药销售额</th>
+            <td th:text="${prescriptionDrug.measurement}">乙</td>
+            <td th:text="${prescriptionDrug.code}">丙</td>
+            <td th:text="${prescriptionDrug.currentTotal}">1</td>
+            <td th:text="${prescriptionDrug.lastYearTotal}">2</td>
+            <td th:text="${prescriptionDrug.currentTotal}">3</td>
+            <td th:text="${prescriptionDrug.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>非处方药销售额</th>
+            <td th:text="${overCounterDrugs.measurement}">乙</td>
+            <td th:text="${overCounterDrugs.code}">丙</td>
+            <td th:text="${overCounterDrugs.currentTotal}">1</td>
+            <td th:text="${overCounterDrugs.lastYearTotal}">2</td>
+            <td th:text="${overCounterDrugs.currentTotal}">3</td>
+            <td th:text="${overCounterDrugs.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>非药品销售额</th>
+            <td th:text="${nonDrug.measurement}">乙</td>
+            <td th:text="${nonDrug.code}">丙</td>
+            <td th:text="${nonDrug.currentTotal}">1</td>
+            <td th:text="${nonDrug.lastYearTotal}">2</td>
+            <td th:text="${nonDrug.currentTotal}">3</td>
+            <td th:text="${nonDrug.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>其中:保健食品销售额</th>
+            <td th:text="${healthFoods.measurement}">乙</td>
+            <td th:text="${healthFoods.code}">丙</td>
+            <td th:text="${healthFoods.currentTotal}">1</td>
+            <td th:text="${healthFoods.lastYearTotal}">2</td>
+            <td th:text="${healthFoods.currentTotal}">3</td>
+            <td th:text="${healthFoods.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>医疗器械销售额</th>
+            <td th:text="${medicalInstruments.measurement}">乙</td>
+            <td th:text="${medicalInstruments.code}">丙</td>
+            <td th:text="${medicalInstruments.currentTotal}">1</td>
+            <td th:text="${medicalInstruments.lastYearTotal}">2</td>
+            <td th:text="${medicalInstruments.currentTotal}">3</td>
+            <td th:text="${medicalInstruments.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>化妆品销售额</th>
+            <td th:text="${cosmetics.measurement}">乙</td>
+            <td th:text="${cosmetics.code}">丙</td>
+            <td th:text="${cosmetics.currentTotal}">1</td>
+            <td th:text="${cosmetics.lastYearTotal}">2</td>
+            <td th:text="${cosmetics.currentTotal}">3</td>
+            <td th:text="${cosmetics.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>其他销售额</th>
+            <td th:text="${other.measurement}">乙</td>
+            <td th:text="${other.code}">丙</td>
+            <td th:text="${other.currentTotal}">1</td>
+            <td th:text="${other.lastYearTotal}">2</td>
+            <td th:text="${other.currentTotal}">3</td>
+            <td th:text="${other.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>年处方数量合计(含电子处方)</th>
+            <td th:text="${prescriptionsTotal.measurement}">乙</td>
+            <td th:text="${prescriptionsTotal.code}">丙</td>
+            <td th:text="${prescriptionsTotal.currentTotal}">1</td>
+            <td th:text="${prescriptionsTotal.lastYearTotal}">2</td>
+            <td th:text="${prescriptionsTotal.currentTotal}">3</td>
+            <td th:text="${prescriptionsTotal.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>其中医院处方数量</th>
+            <td th:text="${hospitalPrescription.measurement}">乙</td>
+            <td th:text="${hospitalPrescription.code}">丙</td>
+            <td th:text="${hospitalPrescription.currentTotal}">1</td>
+            <td th:text="${hospitalPrescription.lastYearTotal}">2</td>
+            <td th:text="${hospitalPrescription.currentTotal}">3</td>
+            <td th:text="${hospitalPrescription.currentStore}">4</td>
+        </tr>
+        <tr>
+            <th>单位负责人</th>
+            <td th:text="${data.resPerson}">石友彪</td>
+            <th>统计负责人</th>
+            <td th:text="${data.statisticalPerson}">杨威</td>
+            <th>调表人</th>
+            <td th:text="${data.fillPerson}">李志</td>
+        </tr>
+        <tr>
+            <th>填表人手机</th>
+            <td th:text="${data.mobile}">13323234343</td>
+            <th>报出日期</th>
+            <td th:text="${data.reportDate}">2016-05-15</td>
+        </tr>
+    </table>
+</div>
+    </div>
+<!--电子商务基本情况 弹出-->
+<div th:if="${not #lists.isEmpty(binfo5)}">
+<div id="dzLayer" class="layer-table " style="display: none">
+    <table class="common-table w100">
+        <tr>
+            <th>指标名称</th>
+            <th>代码</th>
+            <th>单位</th>
+            <th>本期</th>
+        </tr>
+        <!--<tr>-->
+            <!--<th>本期</th>-->
+            <!--<th>上年同期</th>-->
+            <!--<th>本期</th>-->
+            <!--<th>上年同期</th>-->
+        <!--</tr>-->
+        <tr>
+            <th>甲</th>
+            <td>乙</td>
+            <td>丙</td>
+            <td>1</td>
+            <!--<td>2</td>-->
+            <!--<td>3</td>-->
+            <!--<td>4</td>-->
+        </tr>
+        <tr>
+            <th>一、企业基本情况</th>
+            <td>-</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>是否为具有独立法人资质的电商企业</th>
+            <td th:text="${independentLegal.code}">乙</td>
+            <td th:text="${independentLegal.company}">丙</td>
+            <td th:text="${independentLegal.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>交易网址</th>
+            <td th:text="${tranWeb.code}">乙</td>
+            <td th:text="${tranWeb.company}">丙</td>
+            <td th:text="${tranWeb.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>电商营业收入</th>
+            <td th:text="${electricityBusiness.code}">乙</td>
+            <td th:text="${electricityBusiness.company}">丙</td>
+            <td th:text="${electricityBusiness.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>电商业务固定资产总额</th>
+            <td th:text="${fixedAssets.code}">乙</td>
+            <td th:text="${fixedAssets.company}">丙</td>
+            <td th:text="${fixedAssets.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>二.企业运营情况</th>
+            <td >-</td>
+            <td  > </td>
+            <td  > </td>
+        </tr>
+        <tr>
+            <th>电商业务销售金额</th>
+            <td th:text="${salesAmount.code}">乙</td>
+            <td th:text="${salesAmount.company}">丙</td>
+            <td th:text="${salesAmount.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>其中：移动端销售金额</th>
+            <td th:text="${mobSalesAmount.code}">乙</td>
+            <td th:text="${mobSalesAmount.company}">丙</td>
+            <td th:text="${mobSalesAmount.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>第三方平台销售额</th>
+            <td th:text="${thirdSalesAmount.code}">乙</td>
+            <td th:text="${thirdSalesAmount.company}">丙</td>
+            <td th:text="${thirdSalesAmount.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>订单总笔数</th>
+            <td th:text="${ordersTotal.code}">乙</td>
+            <td th:text="${ordersTotal.company}">丙</td>
+            <td th:text="${ordersTotal.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>其中：成交订单总比数</th>
+            <td th:text="${transactionOrder.code}">乙</td>
+            <td th:text="${transactionOrder.company}">丙</td>
+            <td th:text="${transactionOrder.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>出库件数</th>
+            <td th:text="${outbound.code}">乙</td>
+            <td th:text="${outbound.company}">丙</td>
+            <td th:text="${outbound.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>平均客单价</th>
+            <td th:text="${averagePrice.code}">乙</td>
+            <td th:text="${averagePrice.company}">丙</td>
+            <td th:text="${averagePrice.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>平均客品数</th>
+            <td th:text="${averageNum.code}">乙</td>
+            <td th:text="${averageNum.company}">丙</td>
+            <td th:text="${averageNum.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>网站活跃用户数量</th>
+            <td th:text="${activeUsers.code}">乙</td>
+            <td th:text="${activeUsers.company}">丙</td>
+            <td th:text="${activeUsers.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>日均UV数</th>
+            <td th:text="${UV.code}">乙</td>
+            <td th:text="${UV.company}">丙</td>
+            <td th:text="${UV.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>日均PV数</th>
+            <td th:text="${PV.code}">乙</td>
+            <td th:text="${PV.company}">丙</td>
+            <td th:text="${PV.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>日均独立IP数</th>
+            <td th:text="${IP.code}">乙</td>
+            <td th:text="${IP.company}">丙</td>
+            <td th:text="${IP.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>网站转化率</th>
+            <td th:text="${siteConversionRate.code}">乙</td>
+            <td th:text="${siteConversionRate.company}">丙</td>
+            <td th:text="${siteConversionRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>订单转化率</th>
+            <td th:text="${orderConversionRate.code}">乙</td>
+            <td th:text="${orderConversionRate.company}">丙</td>
+            <td th:text="${orderConversionRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>重复购买率</th>
+            <td th:text="${repeatPurchaseRate.code}">乙</td>
+            <td th:text="${repeatPurchaseRate.company}">丙</td>
+            <td th:text="${repeatPurchaseRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>网站注册用户数量</th>
+            <td th:text="${registeredNum.code}">乙</td>
+            <td th:text="${registeredNum.company}">丙</td>
+            <td th:text="${registeredNum.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>其中：企业用户数量</th>
+            <td th:text="${enterpriseUsers.code}">乙</td>
+            <td th:text="${enterpriseUsers.company}">丙</td>
+            <td th:text="${enterpriseUsers.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>个人用户数量</th>
+            <td th:text="${individualUser.code}">乙</td>
+            <td th:text="${individualUser.company}">丙</td>
+            <td th:text="${individualUser.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>电商业务销售品类占比</th>
+            <td >-</td>
+            <td  >丙</td>
+            <td  >1</td>
+        </tr>
+        <tr>
+            <th>处方药</th>
+            <td th:text="${prescription.code}">乙</td>
+            <td th:text="${prescription.company}">丙</td>
+            <td th:text="${prescription.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>非处方药</th>
+            <td th:text="${overCounterDrugs5.code}">乙</td>
+            <td th:text="${overCounterDrugs5.company}">丙</td>
+            <td th:text="${overCounterDrugs5.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>中成药类</th>
+            <td th:text="${chinesePatentMed.code}">乙</td>
+            <td th:text="${chinesePatentMed.company}">丙</td>
+            <td th:text="${chinesePatentMed.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>中药材类</th>
+            <td th:text="${chineseMedicine.code}">乙</td>
+            <td th:text="${chineseMedicine.company}">丙</td>
+            <td th:text="${chineseMedicine.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>西药类</th>
+            <td th:text="${westernMedicine.code}">乙</td>
+            <td th:text="${westernMedicine.company}">丙</td>
+            <td th:text="${westernMedicine.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>医疗器械类</th>
+            <td th:text="${medicalInstruments5.code}">乙</td>
+            <td th:text="${medicalInstruments5.company}">丙</td>
+            <td th:text="${medicalInstruments5.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>卫生材料及用品类</th>
+            <td th:text="${hygienicMaterials.code}">乙</td>
+            <td th:text="${hygienicMaterials.company}">丙</td>
+            <td th:text="${hygienicMaterials.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>保健食品类</th>
+            <td th:text="${healthFood.code}">乙</td>
+            <td th:text="${healthFood.company}">丙</td>
+            <td th:text="${healthFood.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>母婴用品类</th>
+            <td th:text="${maternal.code}">乙</td>
+            <td th:text="${maternal.company}">丙</td>
+            <td th:text="${maternal.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>化妆品及个人护理用品类</th>
+            <td th:text="${cosmetics5.code}">乙</td>
+            <td th:text="${cosmetics5.company}">丙</td>
+            <td th:text="${cosmetics5.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>计划生育及成人用品类</th>
+            <td th:text="${adultProducts.code}">乙</td>
+            <td th:text="${adultProducts.company}">丙</td>
+            <td th:text="${adultProducts.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>其他</th>
+            <td th:text="${other5.code}">乙</td>
+            <td th:text="${other5.company}">丙</td>
+            <td th:text="${other5.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>电商业务交易形式占比</th>
+            <td th:text="${fixedAssets.code}">乙</td>
+            <td th:text="${fixedAssets.company}">丙</td>
+            <td th:text="${fixedAssets.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>B2B（企业对企业）</th>
+            <td th:text="${B2B.code}">乙</td>
+            <td th:text="${B2B.company}">丙</td>
+            <td th:text="${B2B.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>B2C（企业对个人）</th>
+            <td th:text="${B2C.code}">乙</td>
+            <td th:text="${B2C.company}">丙</td>
+            <td th:text="${B2C.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>C2C（个人对个人）</th>
+            <td th:text="${C2C.code}">乙</td>
+            <td th:text="${C2C.company}">丙</td>
+            <td th:text="${C2C.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>O2O（线上对线下）</th>
+            <td th:text="${O2O.code}">乙</td>
+            <td th:text="${O2O.company}">丙</td>
+            <td th:text="${O2O.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>B2A（企业对代理）</th>
+            <td th:text="${B2A.code}">乙</td>
+            <td th:text="${B2A.company}">丙</td>
+            <td th:text="${B2A.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>三.企业服务能力及水平</th>
+            <td  >-</td>
+            <td  > </td>
+            <td  > </td>
+        </tr>
+        <tr>
+            <th>日均订单处理笔数</th>
+            <td th:text="${dailyOrder.code}">乙</td>
+            <td th:text="${dailyOrder.company}">丙</td>
+            <td th:text="${dailyOrder.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>日均出库件数</th>
+            <td th:text="${dailyOutbound.code}">乙</td>
+            <td th:text="${dailyOutbound.company}">丙</td>
+            <td th:text="${dailyOutbound.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>出库差错率</th>
+            <td th:text="${outgoErrorRate.code}">乙</td>
+            <td th:text="${outgoErrorRate.company}">丙</td>
+            <td th:text="${outgoErrorRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>货物准时送达率</th>
+            <td th:text="${ontimeRate.code}">乙</td>
+            <td th:text="${ontimeRate.company}">丙</td>
+            <td th:text="${ontimeRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>退货率</th>
+            <td th:text="${returnRate.code}">乙</td>
+            <td th:text="${returnRate.company}">丙</td>
+            <td th:text="${returnRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>客服有效投诉率</th>
+            <td th:text="${complaintRate.code}">乙</td>
+            <td th:text="${complaintRate.company}">丙</td>
+            <td th:text="${complaintRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>四.电商运营效益</th>
+            <td >-</td>
+            <td  >  </td>
+            <td  > </td>
+        </tr>
+        <tr>
+            <th>电商业务利润总额</th>
+            <td th:text="${grossProfit.code}">乙</td>
+            <td th:text="${grossProfit.company}">丙</td>
+            <td th:text="${grossProfit.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>电商业务费用率</th>
+            <td th:text="${expenseRatio.code}">乙</td>
+            <td th:text="${expenseRatio.company}">丙</td>
+            <td th:text="${expenseRatio.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>其中：电商物流费用率</th>
+            <td th:text="${logisticsCostRate.code}">乙</td>
+            <td th:text="${logisticsCostRate.company}">丙</td>
+            <td th:text="${logisticsCostRate.thisPeriod}">1</td>
+        </tr>
+        <tr>
+            <th>单位负责人</th>
+            <td th:text="${data2.resPerson}" >石友彪</td>
+            <th>统计负责人</th>
+            <td th:text="${data2.statisticalPerson}">杨威</td>
+        </tr>
+        <tr>
+            <th>调表人</th>
+            <td th:text="${data2.fillPerson}">李志</td>
+            <th>填表人手机</th>
+            <td th:text="${data2.mobile}" >13323234343</td>
+        </tr>
+    </table>
+</div>
+    </div>
+<!--行政处罚 弹出-->
+<div id="xzLayer" class="layer-table " style="display: none">
+    <table class="common-table w100 xzTable">
+        <tr>
+            <th colspan="2" class="t-center bg2">案件基本信息</th>
+        </tr>
+        <tr  th:if="${#lists.isEmpty(listanjian)}"><!-- listanjian-->
+            <th>暂无记录！</th>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>案名:</th>
+            <td th:text="${listanjian.caseName}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>行政案号:</th>
+            <td th:text="${listanjian.xzajh}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>基本案情:</th>
+            <td th:text="${listanjian.wfqkzy}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>涉案金额:</th>
+            <td th:text="${listanjian.wfMoney}"> 唐商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>违法所得:</th>
+            <td th:text="${listanjian.illegalIncome}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>案发时间:</th>
+            <td th:text="${listanjian.faDate}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>所属行业:</th>
+            <td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>
+        </tr>
+        <!--<tr th:each="listanjian:${listanjian}">-->
+            <!--<th>是否涉及假冒伪劣:</th>-->
+            <!--<td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>-->
+        <!--</tr>-->
+    </table>
+    <table class="common-table w100 xzTable">
+        <tr>
+            <th colspan="2" class="bg2">处罚信息</th>
+        </tr>
+        <tr  th:if="${#lists.isEmpty(listanjian)}">
+            <th>暂无记录！</th>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>处罚时间:</th>
+            <td th:text="${listanjian.cfDate}">2016-10-09</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>处罚类型:</th>
+            <td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>处罚依据:</th>
+            <td th:text="${listanjian.cfyj}">唐城商标侵权案</td>
+        </tr>
+        <tr th:each="listanjian:${listanjian}">
+            <th>处罚决定书:</th>
+            <td th:text="${listanjian.cfjds}">唐商标侵权案</td>
+        </tr>
+        <!--<tr th:each="listanjian:${listanjian}">-->
+            <!--<th>案件来源部门:</th>-->
+            <!--<td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>-->
+        <!--</tr>-->
+    </table>
+</div>
+</body>
+<script  th:src="@{bootstrap/js/jquery-2.1.3.min.js}"></script>
+<script  th:src="@{bootstrap/js/layer/layer.js}"></script>
+<script  th:src="@{bootstrap/js/laypage.js}"></script>
+<script>
+    $('.common-list3 span').on('click',function () {
+        window.location.hash = '#'+$(this).attr('about'); });
+
+    $('.common-list span').on('click',function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+//    经营状况 弹出
+    $('.jy-table').on('click',function () {
+        layer.open({
+            type: 1,
+            title:false,
+            area:['850px','500px'],
+            content:$('#jyLayer') //这里content是一个普通的String
+        });
+    });
+    $('.show-Table').on('click',function () {
+        layer.open({
+            type: 1,
+            title:false,
+            area:['850px','500px'],
+            content:$('#xzLayer') //这里content是一个普通的String
+        });
+    });
+    $('.dz-table').on('click',function () {
+        layer.open({
+            type: 1,
+            title:false,
+            area:['850px','500px'],
+            content:$('#dzLayer') //这里content是一个普通的String
+        });
+    });
+</script>
+<script th:inline="javascript">
+
+    //基本信息
+    $("#jiben").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "base?id="+id+'?'+caseName;
+
+    });
+    //经营状况
+    $("#jingying").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "jingyin?id="+id+'?'+caseName;
+
+    });
+    //企业年报
+    $("#qiye").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "qiyenb?id="+id+'?'+caseName;
+
+    });
+    //法律诉讼
+    $("#falv").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "law?id="+id+'?'+caseName;
+
+    });
+    //知识产权
+    $("#zhishi").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "knowledge?id="+id+'?'+caseName;
+
+    });
+    //新闻事件
+    $("#xinwen").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "news?id="+id+'?'+caseName;
+
+    });
+    //关联
+    $("#guanlian").on("click",function(){
+        var zch =  $("#coms").val(),
+                tishxxdm =  $("#com").val(),
+                caseName =  $("#mc").val();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "releave?id="+id+'?'+caseName;
+
+    });
+</script>
+</html>

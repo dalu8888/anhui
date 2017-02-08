@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <title>安徽商务诚信服务平台</title>
+    <link th:href="@{bootstrap/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{bootstrap/js/layer/skin/layer.css}" rel="stylesheet"/>
+</head>
+<body>
+<form id="form1" class="form-inline definewidth m20" th:action="@{/companys}" method="get">
+    <div class="w100">
+        <div class="container">
+            <!--头部-->
+            <div class="header">
+
+                <div class="top-search t-center bg-yellow">
+                    <div class="fl shw-name c-fff">
+                        安徽商务诚信服务平台
+                    </div>
+                    <div class="fl search">
+                        <input type="text" id="qiyezhi" name="keyword" class="" placeholder="请输入企业名称、人名、产品名等"/>
+                        <input type="hidden" id="page" name="page"/>
+                            <button class="f1 search-btn" ></button>
+                    </div>
+                </div>
+
+                <div class="top-list bg-yellow2 c-fff">
+                    <div class="list-cont point">
+                        <span>综合</span>
+                        <span>公司</span>
+                        <span>机构</span>
+                    </div>
+                </div>
+            </div>
+            <!--内容部分-->
+            <!--<div  id="bookTemplate">-->
+            <!--</div>-->
+            <div class="content w90 bg-fff">
+               <div class="">
+                  <div class="select-require c-blue w100 fz14">
+                      <span class="c-999">筛选：</span>
+                      <span class="select">安徽</span>
+                      <span class="select">行业</span>
+                      <span class="select select2">注册资本</span>
+                      <span class="select select2">成立日期</span>
+                  </div>
+
+                   <table class="w100 common-table" >
+                       <tr>
+                           <th>名称</th>
+                           <th>曾用名</th>
+                           <th>核准日期</th>
+                           <th>注册号</th>
+                           <th>登记机关</th>
+                           <th>登记状态</th>
+                           <th>统一社会信用代码</th>
+
+                       </tr>
+                       <tr th:if="${#lists.isEmpty(lists)}" >
+                           <td class="c-blue">暂无数据！！</td>
+                       </tr>
+                       <tr th:each="lists:${lists}" class="compInfo">
+                           <td  th:text="${lists.mc}" class="c-blue"></td>
+                           <td th:text="${lists.cym}">90000日元</td>
+                           <td th:text="${lists.hzrq}">西岗折枝</td>
+                           <td  th:text="${lists.zch}">2012-04-12</td>
+                           <td th:text="${lists.djjg}">0</td>
+                           <td th:text="${lists.djzt}">4</td>
+                           <td th:text="${lists.tishxxdm}">1</td>
+                       </tr>
+                       <!--<tr th:each="lists:${lists}" class="compInfo">-->
+                           <!--<td  class="c-blue">查无记录!</td>-->
+                       <!--</tr>-->
+                   </table>
+                   <div id="enterPage" class="mt10 t-center"></div>
+
+               </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script  th:src="@{bootstrap/js/jquery-2.1.3.min.js}"></script>
+<script  th:src="@{bootstrap/js/layer/layer.js}"></script>
+<script  th:src="@{laypage/laypage.js}"></script>
+<script th:inline="javascript">
+    $(".compInfo").on("click",function(){
+        var zch =  $(this).children().eq("3").text(),
+                tishxxdm = $(this).children().eq("6").text(),
+                caseName= $(this).children().eq("0").text();
+        var id= zch !== '' ? zch : tishxxdm;
+        window.location.href = "base?id="+id+'?'+caseName;
+
+    });
+</script>
+<script>
+    var caseName = window.location.search,
+            search = caseName.split("?");
+    console.log(search);
+    caseName = search[1].split("=");
+    caseName = caseName[1];
+    laypage({
+        cont: 'enterPage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+        pages: 10, //通过后台拿到的总页数
+        curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
+            var page = location.search.match(/page=(\d+)/);
+            return page ? page[1] : 1;
+        }(), //当前页
+        skin:'#ff6820',
+        prev: false, //若不显示，设置false即可
+        next: false, //若不显示，设置false即可
+        first:false, //将首页显示为数字1,。若不显示，设置false即可
+        last: false, //将尾页显示为总页数。若不显示，设置false即可
+        jump: function(obj, first){ //触发分页后的回调
+            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+//                window.location.href = "companys?"+caseName+'?'+obj.curr;
+//                alert("---"+caseName)
+                $('#page').val(obj.curr);
+                $('#qiyezhi').val(decodeURIComponent(caseName));
+                $('#form1').submit();
+            }
+        }
+    });
+</script>
+
+</html>
