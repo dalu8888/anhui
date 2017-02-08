@@ -222,17 +222,17 @@
                         <p>行政处罚</p>
                         <table class="common-table w100 gudong">
                             <tr>
-                                <th>文案号</th>
+                                <th>序号</th>
                                 <th>立案时间</th>
                                 <th>案名</th>
-                                <th>行政处罚种类</th>
+                                <th>处罚金额</th>
                                 <th>操作</th>
                             </tr>
-                            <tr th:each="listpunish:${listpunish}">
-                                <td th:text="${listpunish.xzcfjdwsh}">1</td>
-                                <td th:text="${listpunish.zccfjddrq}">2015-02-03</td>
-                                <td th:text="${listpunish.zywfwgss}">以非药品冒充药品</td>
-                                <td th:text="${listpunish.xzcfjd}">60.00</td>
+                            <tr th:each="listanjian,iterstat:${listanjian}">
+                                <td th:text="${iterstat.count}">1</td>
+                                <td th:text="${listanjian.faDate}">2015-02-03</td>
+                                <td th:text="${listanjian.caseName}">以非药品冒充药品</td>
+                                <td th:text="${listanjian.wfMoney}">60.00</td>
                                 <td  class="c-blue point show-Table" >
                                     查看
                                     <!--<a th:href="@{/anjian(caseName=${listpunish.mc},id=${listpunish.id})}">查看</a>-->
@@ -887,14 +887,14 @@
             <th>案发时间:</th>
             <td th:text="${listanjian.faDate}">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
-            <th>所属行业:</th>
-            <td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>
-        </tr>
         <!--<tr th:each="listanjian:${listanjian}">-->
-            <!--<th>是否涉及假冒伪劣:</th>-->
-            <!--<td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>-->
+            <!--<th>所属行业:</th>-->
+            <!--<td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>-->
         <!--</tr>-->
+        <tr th:each="listanjian:${listanjian}">
+            <th>是否涉及假冒伪劣:</th>
+            <td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>
+        </tr>
     </table>
     <table class="common-table w100 xzTable">
         <tr>
@@ -908,8 +908,8 @@
             <td th:text="${listanjian.cfDate}">2016-10-09</td>
         </tr>
         <tr th:each="listanjian:${listanjian}">
-            <th>处罚类型:</th>
-            <td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>
+            <th>处罚部门:</th>
+            <td th:text="${listanjian.deptName}">唐城商标侵权案</td>
         </tr>
         <tr th:each="listanjian:${listanjian}">
             <th>处罚依据:</th>
@@ -919,10 +919,10 @@
             <th>处罚决定书:</th>
             <td th:text="${listanjian.cfjds}">唐商标侵权案</td>
         </tr>
-        <!--<tr th:each="listanjian:${listanjian}">-->
-            <!--<th>案件来源部门:</th>-->
-            <!--<td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>-->
-        <!--</tr>-->
+        <tr th:each="listanjian:${listanjian}">
+            <th>案件来源部门:</th>
+            <td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>
+        </tr>
     </table>
 </div>
 </body>

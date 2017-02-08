@@ -73,16 +73,16 @@ public class UserResource {
             map.put("cfDate", cfDate);
             map.put("hyType", hyType);
             map.put("cfTypes", cfTypes);
-//            if(isJmwlCase==1){
-//                map.put("isJmwlCase","是");
-//            }else{
-//                map.put("isJmwlCase","否");
-//            }
-//            if(sysId==0){
-//                map.put("sysId","两法平台");
-//            }else{
-//                map.put("sysId","工商局系统");
-//            }
+            if(isJmwlCase==1){
+                map.put("isJmwlCase","是");
+            }else{
+                map.put("isJmwlCase","否");
+            }
+            if(sysId==0){
+                map.put("sysId","两法平台");
+            }else{
+                map.put("sysId","工商局系统");
+            }
             map.put("cfyj", cfyj);
             map.put("cfjds", cfjds);
             lists.add(map);
