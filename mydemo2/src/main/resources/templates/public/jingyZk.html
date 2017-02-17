@@ -233,17 +233,21 @@
                                 <td th:text="${listanjian.faDate}">2015-02-03</td>
                                 <td th:text="${listanjian.caseName}">以非药品冒充药品</td>
                                 <td th:text="${listanjian.wfMoney}">60.00</td>
+                                <input type="hidden" th:value="${listanjian.id}"/>
                                 <td  class="c-blue point show-Table" >
-                                    查看
-                                    <!--<a th:href="@{/anjian(caseName=${listpunish.mc},id=${listpunish.id})}">查看</a>-->
+                                    <a th:value="${listanjian.id}" onclick='getInfoById(this)'>查看</a>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </div>
-                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listpunish)}">
+                <div class="enter-info border-b"  th:if="${#lists.isEmpty(listanjian)}">
                     <p class="c-blue">暂无记录！</p>
                 </div>
+
+                <!--<div class="enter-info border-b"  th:if="${#lists.isEmpty(listpunish)}">-->
+                    <!--<p class="c-blue">暂无记录！</p>-->
+                <!--</div>-->
                 <!--信息披露-->
                 <div id="xxpl" class="enter-info border-b">
                     <div class="partner">
@@ -860,68 +864,68 @@
         <tr>
             <th colspan="2" class="t-center bg2">案件基本信息</th>
         </tr>
-        <tr  th:if="${#lists.isEmpty(listanjian)}"><!-- listanjian-->
-            <th>暂无记录！</th>
-        </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <!--<tr  th:if="${#lists.isEmpty(listanjian)}">&lt;!&ndash; listanjian&ndash;&gt;-->
+            <!--<th>暂无记录！</th>-->
+        <!--</tr>-->
+        <tr>
             <th>案名:</th>
-            <td th:text="${listanjian.caseName}">唐城商标侵权案</td>
+            <td id="caseName">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>行政案号:</th>
-            <td th:text="${listanjian.xzajh}">唐城商标侵权案</td>
+            <td id="xzajh">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>基本案情:</th>
-            <td th:text="${listanjian.wfqkzy}">唐城商标侵权案</td>
+            <td id="wfqkzy">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>涉案金额:</th>
-            <td th:text="${listanjian.wfMoney}"> 唐商标侵权案</td>
+            <td id="wfMoney"> 唐商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>违法所得:</th>
-            <td th:text="${listanjian.illegalIncome}">唐城商标侵权案</td>
+            <td id="illegalIncome">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>案发时间:</th>
-            <td th:text="${listanjian.faDate}">唐城商标侵权案</td>
+            <td id="faDate">唐城商标侵权案</td>
         </tr>
         <!--<tr th:each="listanjian:${listanjian}">-->
             <!--<th>所属行业:</th>-->
             <!--<td th:text="${listanjian.cfTypes}">唐城商标侵权案</td>-->
         <!--</tr>-->
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>是否涉及假冒伪劣:</th>
-            <td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>
+            <td id="isJmwlCase">唐城商标侵权案</td>
         </tr>
     </table>
     <table class="common-table w100 xzTable">
         <tr>
             <th colspan="2" class="bg2">处罚信息</th>
         </tr>
-        <tr  th:if="${#lists.isEmpty(listanjian)}">
-            <th>暂无记录！</th>
-        </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <!--<tr  th:if="${#lists.isEmpty(listanjian)}">-->
+            <!--<th>暂无记录！</th>-->
+        <!--</tr>-->
+        <tr>
             <th>处罚时间:</th>
-            <td th:text="${listanjian.cfDate}">2016-10-09</td>
+            <td id="cfDate">2016-10-09</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>处罚部门:</th>
-            <td th:text="${listanjian.deptName}">唐城商标侵权案</td>
+            <td id="deptName">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>处罚依据:</th>
-            <td th:text="${listanjian.cfyj}">唐城商标侵权案</td>
+            <td id="cfyj">唐城商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>处罚决定书:</th>
-            <td th:text="${listanjian.cfjds}">唐商标侵权案</td>
+            <td id="cfjds">唐商标侵权案</td>
         </tr>
-        <tr th:each="listanjian:${listanjian}">
+        <tr>
             <th>案件来源部门:</th>
-            <td th:text="${listanjian.isJmwlCase}">唐城商标侵权案</td>
+            <td id="deptName2">唐城商标侵权案</td>
         </tr>
     </table>
 </div>
@@ -945,14 +949,60 @@
             content:$('#jyLayer') //这里content是一个普通的String
         });
     });
-    $('.show-Table').on('click',function () {
+
+
+    function getInfoById(obj){
+        console.log(obj);
+        console.log(obj.getAttribute("value"));
+
+        $.ajax({
+//            url:'http://ahuilf.eastdc.cn:82/xzcfinfo.do',
+            url:'http://localhost:8080/xzcfinfo.do',
+            data:{"id":obj.getAttribute("value")},
+            success: function(res){
+                console.log(res);
+                $('#caseName').text(res.caseName);
+                $('#xzajh').text(res.xzajh);
+                $('#wfqkzy').text(res.wfqkzy);
+                $('#wfMoney').text(res.wfMoney);
+                $('#illegalIncome').text(res.illegalIncome);
+                $('#faDate').text(res.faDate);
+                $('#isJmwlCase').text(res.isJmwlCase);
+                $('#cfDate').text(res.cfDate);
+                $('#deptName').text(res.deptName);
+                $('#cfyj').text(res.cfyj);
+                $('#cfjds').text(res.cfjds);
+                $('#deptName2').text(res.deptName);
+            }
+        })
+
         layer.open({
             type: 1,
             title:false,
             area:['850px','500px'],
             content:$('#xzLayer') //这里content是一个普通的String
         });
-    });
+    }
+
+    /*$('.show-Table').on('click',function () {
+
+        $.ajax({
+            url:'http://localhost:8080/xzcfinfo.do',
+            data:{"id":$('#listanjianid').val()},
+            success: function(res){
+                console.log(res);
+                $('#caseName').text(res.caseName);
+
+            }
+        })
+
+        layer.open({
+            type: 1,
+            title:false,
+            area:['850px','500px'],
+            content:$('#xzLayer') //这里content是一个普通的String
+        });
+    });*/
     $('.dz-table').on('click',function () {
         layer.open({
             type: 1,

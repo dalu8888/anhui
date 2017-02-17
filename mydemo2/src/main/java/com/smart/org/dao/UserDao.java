@@ -16,4 +16,6 @@ public interface UserDao {
      * @return
      */
     public List<User> findUserInfo(@Param("caseName") String caseName);
+
+    User getczcfinfo(Long id);
 }

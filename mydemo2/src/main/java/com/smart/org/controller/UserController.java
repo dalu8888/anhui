@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -264,6 +265,11 @@ public class UserController {
         return "public/jingyZk";
     }
 
+    @RequestMapping("/xzcfinfo.do")
+    @ResponseBody
+    public Map xzcfinfo(@RequestParam Long id){
+        return userResource.getczcfinfo(id);
+    }
     /*
            * 企业年报
            */

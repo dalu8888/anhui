@@ -21,5 +21,7 @@ public class UserService {
     }
 
 
-
+    public User getczcfinfo(Long id) {
+        return userDao.getczcfinfo(id);
+    }
 }

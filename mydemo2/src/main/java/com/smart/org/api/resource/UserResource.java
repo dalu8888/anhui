@@ -39,55 +39,109 @@ public class UserResource {
         List lists = new ArrayList();
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
+            Long lid= list.get(i).getId();
             caseName = list.get(i).getCaseName();
             Date faDate = list.get(i).getFaDate();
-            String pName = list.get(i).getpName();
+//            String pName = list.get(i).getpName();
             Long wfMoney = list.get(i).getWfMoney();
-            String deptName = list.get(i).getDeptName();
-            String wfqkzy = list.get(i).getWfqkzy();
-            Long caseState = list.get(i).getCaseState();
-            String xzajh = list.get(i).getXzajh();
-            Long illegalIncome = list.get(i).getIllegalIncome();
-            Date ccDate = list.get(i).getCcDate();
-            Date cfDate = list.get(i).getCfDate();
-            Long hyType = list.get(i).getHyType();
-            Long isJmwlCase = list.get(i).getIsJmwlCase();
-            Long sysId = list.get(i).getSysId();
-            String cfTypes = list.get(i).getCfTypes();
-            String cfyj = list.get(i).getCfyj();
-            String cfjds = list.get(i).getCfjds();
-            int indexOf = caseName.indexOf("公司");//截断到公司处，分割成两个字段
-            String compName = caseName.substring(0, indexOf + 2);//公司名称
-            caseName = caseName.substring(indexOf + 2);//案件名称
-            map.put("compName", compName);
+//            String deptName = list.get(i).getDeptName();
+//            String wfqkzy = list.get(i).getWfqkzy();
+//            Long caseState = list.get(i).getCaseState();
+//            String xzajh = list.get(i).getXzajh();
+//            Long illegalIncome = list.get(i).getIllegalIncome();
+//            Date ccDate = list.get(i).getCcDate();
+//            Date cfDate = list.get(i).getCfDate();
+//            Long hyType = list.get(i).getHyType();
+//            Long isJmwlCase = list.get(i).getIsJmwlCase();
+//            Long sysId = list.get(i).getSysId();
+//            String cfTypes = list.get(i).getCfTypes();
+//            String cfyj = list.get(i).getCfyj();
+//            String cfjds = list.get(i).getCfjds();
+//            int indexOf = caseName.indexOf("公司");//截断到公司处，分割成两个字段
+//            String compName = caseName.substring(0, indexOf + 2);//公司名称
+//            caseName = caseName.substring(indexOf + 2);//案件名称
+            map.put("id", lid);
+//            map.put("compName", compName);
             map.put("caseName", caseName);
-            map.put("wfqkzy", wfqkzy);
+//            map.put("wfqkzy", wfqkzy);
             map.put("faDate", faDate);
-            map.put("pName", pName);
+//            map.put("pName", pName);
             map.put("wfMoney", wfMoney);
-            map.put("deptName", deptName);
-            map.put("caseState", caseState);
-            map.put("xzajh", xzajh);
-            map.put("illegalIncome", illegalIncome);
-            map.put("ccDate", ccDate);
-            map.put("cfDate", cfDate);
-            map.put("hyType", hyType);
-            map.put("cfTypes", cfTypes);
-            if(isJmwlCase==1){
-                map.put("isJmwlCase","是");
-            }else{
-                map.put("isJmwlCase","否");
-            }
-            if(sysId==0){
-                map.put("sysId","两法平台");
-            }else{
-                map.put("sysId","工商局系统");
-            }
-            map.put("cfyj", cfyj);
-            map.put("cfjds", cfjds);
+//            map.put("deptName", deptName);
+//            map.put("caseState", caseState);
+//            map.put("xzajh", xzajh);
+//            map.put("illegalIncome", illegalIncome);
+//            map.put("ccDate", ccDate);
+//            map.put("cfDate", cfDate);
+//            map.put("hyType", hyType);
+//            map.put("cfTypes", cfTypes);
+//            if(isJmwlCase==1){
+//                map.put("isJmwlCase","是");
+//            }else{
+//                map.put("isJmwlCase","否");
+//            }
+//            if(sysId==0){
+//                map.put("sysId","两法平台");
+//            }else{
+//                map.put("sysId","工商局系统");
+//            }
+//            map.put("cfyj", cfyj);
+//            map.put("cfjds", cfjds);
             lists.add(map);
         }
         return lists;
+    }
+
+    public Map getczcfinfo(Long id){
+        User user= userService.getczcfinfo(id);
+        Map<String, Object> map = new HashMap<String, Object>();
+        String caseName = user.getCaseName();
+        Date faDate = user.getFaDate();
+        String pName = user.getpName();
+        Long wfMoney = user.getWfMoney();
+        String deptName = user.getDeptName();
+        String wfqkzy = user.getWfqkzy();
+        Long caseState = user.getCaseState();
+        String xzajh = user.getXzajh();
+        Long illegalIncome = user.getIllegalIncome();
+        Date ccDate = user.getCcDate();
+        Date cfDate = user.getCfDate();
+        Long hyType = user.getHyType();
+        Long isJmwlCase = user.getIsJmwlCase();
+        Long sysId = user.getSysId();
+        String cfTypes = user.getCfTypes();
+        String cfyj = user.getCfyj();
+        String cfjds = user.getCfjds();
+        int indexOf = caseName.indexOf("公司");//截断到公司处，分割成两个字段
+        String compName = caseName.substring(0, indexOf + 2);//公司名称
+        caseName = caseName.substring(indexOf + 2);//案件名称
+        map.put("compName", compName);
+        map.put("caseName", caseName);
+        map.put("wfqkzy", wfqkzy);
+        map.put("faDate", faDate);
+        map.put("pName", pName);
+        map.put("wfMoney", wfMoney);
+        map.put("deptName", deptName);
+        map.put("caseState", caseState);
+        map.put("xzajh", xzajh);
+        map.put("illegalIncome", illegalIncome);
+        map.put("ccDate", ccDate);
+        map.put("cfDate", cfDate);
+        map.put("hyType", hyType);
+        map.put("cfTypes", cfTypes);
+        if(isJmwlCase==1){
+            map.put("isJmwlCase","是");
+        }else{
+            map.put("isJmwlCase","否");
+        }
+        if(sysId==0){
+            map.put("sysId","两法平台");
+        }else{
+            map.put("sysId","工商局系统");
+        }
+        map.put("cfyj", cfyj);
+        map.put("cfjds", cfjds);
+        return map;
     }
 
     /*

@@ -21,4 +21,8 @@
 
      </select>
 
+    <select id="getczcfinfo"  parameterType="Long" resultType="User">
+        select * from CASE_XZCF WHERE id=#{id}
+    </select>
+
  </mapper>
