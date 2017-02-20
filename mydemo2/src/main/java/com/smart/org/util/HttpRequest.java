@@ -1,69 +1,119 @@
 package com.smart.org.util;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by asus on 2017/1/19.
  */
 public class HttpRequest {
+
+    public static String apikey="ZGlnaXRhbGNoaW5hMTAwMA==";
+    public static String secretkey= "5923732ac18bc9a3de2c9c71e3c521f3c18bc9a3de2c9c71";
     /**
      * 向指定URL发送GET方法的请求
      *
      * @param url
      *            发送请求的URL
-     * @param param
+     * @paramparam
      *            请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL 所代表远程资源的响应结果
      */
-    public static String sendGet(String url, String param) {
-        String result = "";
-        BufferedReader in = null;
+    public static String sendGet(String url, String urlParams) throws IOException {
+        GetMethod get = null;
+        String rtstring=null;
+        if (urlParams != null && !"".equals(urlParams)) {
+            get = new GetMethod(url + "?" + urlParams);
+        } else {
+            get = new GetMethod(url);
+        }
+        HttpClient client = new HttpClient();
         try {
-            String urlNameString = url + "?" + param;
-          //  System.out.println("全参："+urlNameString);
-            URL realUrl = new URL(urlNameString);
-            // 打开和URL之间的连接
-            URLConnection connection = realUrl.openConnection();
-            // 设置通用的请求属性
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            // 建立实际的连接
-            connection.connect();
-            // 获取所有响应头字段
-            Map<String, List<String>> map = connection.getHeaderFields();
-            // 遍历所有的响应头字段
-//            for (String key : map.keySet()) {
-//                System.out.println(key + "--->" + map.get(key));
-//            }
-
-            // 定义 BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream(), "UTF-8"));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-        } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
+            get.setRequestHeader("apikey", apikey);
+            get.setRequestHeader("sign", signGetParam(apikey, secretkey, urlParams));
+            client.executeMethod(get);
+            rtstring=get.getResponseBodyAsString();
+        } catch (final Exception e) {
             e.printStackTrace();
+            // 调用异常, 返回异常报文
+        } finally {
+            get.releaseConnection();
         }
-        // 使用finally块来关闭输入流
-        finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }
-        return result;
+        return rtstring;
     }
+
+    public static String sendGet2(String url, String urlParams) throws IOException {
+        GetMethod get = null;
+        String rtstring=null;
+        if (urlParams != null && !"".equals(urlParams)) {
+            get = new GetMethod(url + "?" + urlParams);
+        } else {
+            get = new GetMethod(url);
+        }
+        HttpClient client = new HttpClient();
+        try {
+//            get.setRequestHeader("apikey", apikey);
+//            get.setRequestHeader("sign", signGetParam(apikey, secretkey, urlParams));
+            client.executeMethod(get);
+            rtstring=get.getResponseBodyAsString();
+        } catch (final Exception e) {
+            e.printStackTrace();
+            // 调用异常, 返回异常报文
+        } finally {
+            get.releaseConnection();
+        }
+        return rtstring;
+    }
+
+    /**
+     * 把参数排序,然后按算法加密
+     *
+     * @param apikey
+     * @param secretkey
+     * @param param
+     * @return
+     * @throws Exception
+     */
+    public static String signGetParam(String apikey, String secretkey, String param) throws Exception {
+        String pf = "";
+        if (param != null && !param.equals("")) {
+            String[] ps = param.split("&");
+            Arrays.sort(ps, String.CASE_INSENSITIVE_ORDER);
+            for (String p : ps) {
+                pf += p + "&";
+            }
+            pf = pf.substring(0, pf.length() - 1);
+        }
+
+        return signRequest(apikey, pf, secretkey);
+    }
+
+    public static String signRequest(String appid, String srcText, String appkey) throws Exception {
+
+        // 对报文进行BASE64编码，避免中文处理问题
+        String base64Text = new String(org.apache.commons.codec.binary.Base64.encodeBase64((appid + srcText)
+                .getBytes("utf-8"), false));
+        // MD5摘要，生成固定长度字符串用于加密
+        String destText = MD5Util.md5Digest(base64Text);
+        AlgorithmData data = new AlgorithmData();
+        data.setDataMing(destText);
+        data.setKey(appkey);
+        // 3DES加密
+        Algorithm3DES.encryptMode(data);
+        return data.getDataMi();
+    }
+
+//    public static void main(String[] args) throws IOException {
+//        String address = "http://apis.scity.cn/fengbao/riskstromdata/search";
+//        String urlParams = "keyword=" + URLEncoder.encode("神码","utf-8") + "&from=" + 1 + "&size=" + 10;
+////        urlParams = new URI(urlParams, false, "UTF-8").toString();
+////        String json = commonGet(address, urlParams);
+//        String json = HttpRequest.sendGet(address, urlParams);
+//    }
+
+
+
 }

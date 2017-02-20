@@ -4,10 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.smart.org.model.User;
 import com.smart.org.service.UserService;
-import com.smart.org.util.*;
-import org.apache.commons.httpclient.HttpClient;
+import com.smart.org.util.HttpRequest;
+import com.smart.org.util.JudgeRequest;
 import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +22,12 @@ import java.util.*;
 public class UserResource {
     @Autowired
     private UserService userService;
-    HttpClient client = new HttpClient();
+//    HttpClient client = new HttpClient();
     //申请的apikey,secretkey
-    String apikey = "ZGlnaXRhbGNoaW5hMTAwMA==";
-    String secretkey = "5923732ac18bc9a3de2c9c71e3c521f3c18bc9a3de2c9c71";
+    public static String apikey="ZGlnaXRhbGNoaW5hMTAwMA==";
+    public static String secretkey= "5923732ac18bc9a3de2c9c71e3c521f3c18bc9a3de2c9c71";
+
+    public static final String ENCODE="utf-8";
 
     private Gson gson;
 
@@ -151,10 +152,11 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/search";
         String urlParams = "keyword=" + keyword;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
-        System.out.println("1111111111..." + mapdata);
+//        System.out.println("1111111111..." + mapdata);
         List list = (List) mapdata.get("hits");
         List lists = new ArrayList();
         if (JudgeRequest.OkRequest(JSON)) {
@@ -188,7 +190,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/search";
         String urlParams = "keyword=" + keyword + "&from=" + from + "&size=" + 10;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -224,7 +227,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/companyinfo";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
 
         List lists = new ArrayList();
@@ -265,7 +269,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/member";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         System.out.println("member..." + mapdata);
@@ -284,7 +289,7 @@ public class UserResource {
         else{
             lists = null;
         }
-        System.out.println("member..." + lists);
+//        System.out.println("member..." + lists);
         return lists;
 //        System.out.println("1111111111..." + lists);
 
@@ -297,7 +302,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/investorInfo";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
 
         List lists = new ArrayList();
@@ -331,7 +337,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/investment";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map<String, Object> paraMap = new HashMap<String, Object>();
         Map mapdata = (Map) JSON.get("data");
@@ -364,7 +371,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/yearReport";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
 //        DVO dvo=gson.fromJson(json,new TypeToken<DVO>() {}.getType());
 //        List<GuDongInfo> guDongInfos=dvo.getData().getGuDongInfos();
 
@@ -480,10 +488,11 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/businesscChange";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
-        System.out.println("1111111111..." + mapdata);
+//        System.out.println("1111111111..." + mapdata);
         List list = (List) mapdata.get("hits");
         List lists = new ArrayList();
         if (JudgeRequest.OkRequest(JSON)) {
@@ -515,7 +524,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/chattelmortgage";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
 //        System.out.println("1111111111..." + mapdata);
@@ -564,10 +574,11 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/stockvend";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
-        System.out.println("1111111111..." + mapdata);
+//        System.out.println("1111111111..." + mapdata);
         List list = (List) mapdata.get("hits");
         List lists = new ArrayList();
         if (JudgeRequest.OkRequest(JSON)) {
@@ -607,7 +618,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/punish";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
 
         Map mapdata = (Map) JSON.get("data");
@@ -651,7 +663,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/taxarrears";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -692,7 +705,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/taxabnormal";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         List lists = new ArrayList();
         if (JudgeRequest.OkRequest(JSON)) {
@@ -730,7 +744,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/abnormalbusiness";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List lists = new ArrayList();
@@ -765,7 +780,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/court";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -802,7 +818,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/writ";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
 
         List lists = new ArrayList();
@@ -841,7 +858,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/judicial";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
 
         List lists = new ArrayList();
@@ -880,7 +898,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/execute";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -919,7 +938,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/badfaith";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -965,7 +985,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/advice";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -1002,7 +1023,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/patent";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         System.out.println("patent..." + mapdata);
@@ -1048,7 +1070,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/copyright";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         System.out.println("copyright..." + mapdata);
@@ -1094,7 +1117,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/icp";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         System.out.println("icp..." + mapdata);
@@ -1135,7 +1159,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/bid";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         List list = (List) mapdata.get("hits");
@@ -1173,7 +1198,8 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/soil";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         System.out.println("soil..." + mapdata);
@@ -1223,7 +1249,8 @@ public class UserResource {
         String urlParams = "id=" + id + "&begin=" + begin + "&end=" + end;
     //    System.out.println("参数888888：：：" + urlParams);
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
         Map maps = (Map) mapdata.get("event");
@@ -1267,10 +1294,11 @@ public class UserResource {
         String address = "http://apis.scity.cn/fengbao/riskstromdata/news";
         String urlParams = "id=" + id;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet(address, urlParams);
         JSONObject JSON = JSONObject.parseObject(json);
         Map mapdata = (Map) JSON.get("data");
-        System.out.println("1111111111..." + mapdata);
+//        System.out.println("1111111111..." + mapdata);
         List lists = new ArrayList();
         if (JudgeRequest.OkRequest(JSON)) {
             Map<String, Object> paraMap = new HashMap<String, Object>();
@@ -1297,7 +1325,9 @@ public class UserResource {
         String address = "http://api.internetware.cn/ahypltglxt/";
         String urlParams = "iw-apikey=123&iw-cmd=list&reportName="+reportName+"&year=2015&page=1&name=" + name;
         urlParams = new URI(urlParams, false, "UTF-8").toString();
-        String json = commonGet(address, urlParams);
+//        String json = commonGet(address, urlParams);
+        String json = HttpRequest.sendGet2(address, urlParams);
+//        System.out.println("yaopin--"+json);
         JSONObject jsonObject = JSONObject.parseObject(json);
         Map map = new HashMap();
         map.put("binfo", jsonObject.getJSONObject("data").get("list"));
@@ -1359,7 +1389,8 @@ public class UserResource {
         String urlParams = "iw-apikey=123&iw-cmd=yplt3&url=" + url;
 //        urlParams = new URI(urlParams, false, "UTF-8").toString();
 //        String json= commonGet(address,urlParams);
-        String json = HttpRequest.sendGet(address, urlParams);
+        String json = HttpRequest.sendGet2(address, urlParams);
+//        System.out.println("ytl3"+json);
         JSONObject JSON = JSONObject.parseObject(json);
 
         Map map = new HashMap();
@@ -1392,7 +1423,8 @@ public class UserResource {
 //        String urlParams ="url="+url;
 //        urlParams = new URI(urlParams, false, "UTF-8").toString();
 //        String json= commonGet(address,urlParams);
-        String json = HttpRequest.sendGet(address, urlParams);
+        String json = HttpRequest.sendGet2(address, urlParams);
+//        System.out.println("ytl3"+json);
         JSONObject JSON = JSONObject.parseObject(json);
         Map map = new HashMap();
         map.put("data2", JSON.get("data"));
@@ -1459,82 +1491,83 @@ public class UserResource {
      * @param address
      * @param urlParams
      */
-    public String commonGet(String address, String urlParams) throws Exception {
-        GetMethod get = null;
-        if (urlParams != null && !"".equals(urlParams)) {
-            get = new GetMethod(address + "?" + urlParams);
-        } else {
-            get = new GetMethod(address);
-        }
-
-        try {
-            get.setRequestHeader("apikey", apikey);
-            get.setRequestHeader("sign", signGetParam(apikey, secretkey, urlParams));
-
-            client.executeMethod(get);
-            System.out.println("Access System authenticate, Status: "
-                    + get.getStatusCode());
-            System.out.println("Access System authenticate, Response: "
-                    + get.getResponseBodyAsString());
-        } catch (final Exception e) {
-            e.printStackTrace();
-            // 调用异常, 返回异常报文
-        } finally {
-            get.releaseConnection();
-        }
-        return get.getResponseBodyAsString();
-    }
-
-    /**
-     * 把参数排序,然后按算法加密
-     *
-     * @param apikey
-     * @param secretkey
-     * @param param
-     * @return
-     * @throws Exception
-     */
-    public String signGetParam(String apikey, String secretkey, String param) throws Exception {
-        String pf = "";
-        if (param != null && !param.equals("")) {
-            String[] ps = param.split("&");
-            Arrays.sort(ps, String.CASE_INSENSITIVE_ORDER);
-            for (String p : ps) {
-                pf += p + "&";
-            }
-            pf = pf.substring(0, pf.length() - 1);
-        }
-
-        return signRequest(apikey, pf, secretkey);
-    }
-
-
-    public String signPostParam(String apikey, String secretkey, Map<String, Object> param) throws Exception {
-        String pf = "";
-        if (param != null) {
-            Set<String> keySet = param.keySet();
-            for (String key : keySet) {
-                pf += key + "=" + param.get(key) + "&";
-            }
-            pf = pf.substring(0, pf.length() - 1);
-        }
-
-        return signRequest(apikey, pf, secretkey);
-    }
-
-
-    public static String signRequest(String appid, String srcText, String appkey) throws Exception {
-
-        // 对报文进行BASE64编码，避免中文处理问题
-        String base64Text = new String(org.apache.commons.codec.binary.Base64.encodeBase64((appid + srcText)
-                .getBytes("utf-8"), false));
-        // MD5摘要，生成固定长度字符串用于加密
-        String destText = MD5Util.md5Digest(base64Text);
-        AlgorithmData data = new AlgorithmData();
-        data.setDataMing(destText);
-        data.setKey(appkey);
-        // 3DES加密
-        Algorithm3DES.encryptMode(data);
-        return data.getDataMi();
-    }
+//    public String commonGet(String address, String urlParams) throws Exception {
+//        GetMethod get = null;
+//        if (urlParams != null && !"".equals(urlParams)) {
+//            get = new GetMethod(address + "?" + urlParams);
+//        } else {
+//            get = new GetMethod(address);
+//        }
+//
+//        try {
+//            HttpClient client = new HttpClient();
+//            get.setRequestHeader("apikey", apikey);
+//            get.setRequestHeader("sign", signGetParam(apikey, secretkey, urlParams));
+//
+//            client.executeMethod(get);
+//            System.out.println("Access System authenticate, Status: "
+//                    + get.getStatusCode());
+//            System.out.println("Access System authenticate, Response: "
+//                    + get.getResponseBodyAsString());
+//        } catch (final Exception e) {
+//            e.printStackTrace();
+//            // 调用异常, 返回异常报文
+//        } finally {
+//            get.releaseConnection();
+//        }
+//        return get.getResponseBodyAsString();
+//    }
+//
+//    /**
+//     * 把参数排序,然后按算法加密
+//     *
+//     * @param apikey
+//     * @param secretkey
+//     * @param param
+//     * @return
+//     * @throws Exception
+//     */
+//    public String signGetParam(String apikey, String secretkey, String param) throws Exception {
+//        String pf = "";
+//        if (param != null && !param.equals("")) {
+//            String[] ps = param.split("&");
+//            Arrays.sort(ps, String.CASE_INSENSITIVE_ORDER);
+//            for (String p : ps) {
+//                pf += p + "&";
+//            }
+//            pf = pf.substring(0, pf.length() - 1);
+//        }
+//
+//        return signRequest(apikey, pf, secretkey);
+//    }
+//
+//
+//    public String signPostParam(String apikey, String secretkey, Map<String, Object> param) throws Exception {
+//        String pf = "";
+//        if (param != null) {
+//            Set<String> keySet = param.keySet();
+//            for (String key : keySet) {
+//                pf += key + "=" + param.get(key) + "&";
+//            }
+//            pf = pf.substring(0, pf.length() - 1);
+//        }
+//
+//        return signRequest(apikey, pf, secretkey);
+//    }
+//
+//
+//    public static String signRequest(String appid, String srcText, String appkey) throws Exception {
+//
+//        // 对报文进行BASE64编码，避免中文处理问题
+//        String base64Text = new String(org.apache.commons.codec.binary.Base64.encodeBase64((appid + srcText)
+//                .getBytes("utf-8"), false));
+//        // MD5摘要，生成固定长度字符串用于加密
+//        String destText = MD5Util.md5Digest(base64Text);
+//        AlgorithmData data = new AlgorithmData();
+//        data.setDataMing(destText);
+//        data.setKey(appkey);
+//        // 3DES加密
+//        Algorithm3DES.encryptMode(data);
+//        return data.getDataMi();
+//    }
 }
